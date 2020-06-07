@@ -942,7 +942,7 @@ function Kong.balancer()
 end
 
 
-function Kong.header_filter()
+function Kong.header_filter(fake)
   local ctx = ngx.ctx
   if not ctx.KONG_PROCESSING_START then
     ctx.KONG_PROCESSING_START = ngx.req.start_time() * 1000
@@ -993,7 +993,11 @@ function Kong.header_filter()
 
   runloop.header_filter.before(ctx)
   local plugins_iterator = runloop.get_plugins_iterator()
-  execute_plugins_iterator(plugins_iterator, "header_filter", ctx)
+  if fake then
+    execute_plugins_iterator(plugins_iterator, "fake_header_filter", ctx)
+  else
+    execute_plugins_iterator(plugins_iterator, "header_filter", ctx)
+  end
   runloop.header_filter.after(ctx)
 
   ctx.KONG_HEADER_FILTER_ENDED_AT = get_now_ms()
@@ -1001,7 +1005,7 @@ function Kong.header_filter()
 end
 
 
-function Kong.body_filter()
+function Kong.body_filter(fake)
   local ctx = ngx.ctx
   if not ctx.KONG_BODY_FILTER_START then
     ctx.KONG_BODY_FILTER_START = get_now_ms()
@@ -1039,15 +1043,19 @@ function Kong.body_filter()
 
   kong_global.set_phase(kong, PHASES.body_filter)
 
-  if kong.ctx.core.response_body then
+  if kong.ctx.core.response_body and not fake then
     arg[1] = kong.ctx.core.response_body
     arg[2] = true
   end
 
   local plugins_iterator = runloop.get_plugins_iterator()
-  execute_plugins_iterator(plugins_iterator, "body_filter", ctx)
+  if fake then
+    execute_plugins_iterator(plugins_iterator, "fake_body_filter", ctx)
+  else
+    execute_plugins_iterator(plugins_iterator, "body_filter", ctx)
+  end
 
-  if not arg[2] then
+  if not fake and not arg[2] then
     return
   end
 
