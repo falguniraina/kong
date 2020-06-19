@@ -1294,6 +1294,10 @@ return {
       end
     end
   },
+  response = {
+    before = function() end,
+    after = function() end,
+  },
   header_filter = {
     before = function(ctx)
       if not ctx.KONG_PROXIED then
