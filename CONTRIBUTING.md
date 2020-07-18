@@ -187,7 +187,7 @@ If you are asked to update your patch by a reviewer, please do so! Remember:
 you are probably the one in need of it. You must be prepared to apply changes
 to it if necessary.
 
-If your Pull Request was accepted and fixes a bug, adds functionality, or
+If your Pull Request was accepted and it fixes a bug, adds functionality, or
 makes it significantly easier to use or understand Kong, congratulations!
 You are now an official contributor to Kong. Get in touch with us to receive
 your very own [Contributor T-shirt](#contributor-t-shirt)!
@@ -230,7 +230,7 @@ spot another bug. **Do not fix both bugs in the same commit!** Finish your
 work on the initial bug, propose your patch, and come back to the second bug
 later on. This is also valid for unrelated style fixes, refactors, etc...
 
-You should use your best judgment when facing such decisions. A good approach
+You should use your best judgement when facing such decisions. A good approach
 for this is to put yourself in the shoes of the person who will review your
 patch: will they understand your changes and reasoning just by reading your
 commit history? Will they find unrelated changes in a particular commit? They
@@ -486,7 +486,7 @@ practices:
   end
   ```
 
-And finally, most importantly: use your best judgment to design an
+And finally, most importantly: use your best judgement to design an
 efficient algorithm. Doing so will always be more performant than a
 poorly-designed algorithm, even following all the performance tricks of the
 language you are using. :smile:
